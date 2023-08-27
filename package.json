@@ -1,0 +1,24 @@
+{
+  "name": "find-duplicate-files",
+  "version": "1.0.0",
+  "description": "Node.js CLI application that takes a directory and finds duplicate files within that directory and its subdirectories.",
+  "main": "find-duplicates.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "duplicate",
+    "files",
+    "directory"
+  ],
+  "author": "jihoonj",
+  "license": "ISC",
+  "bin": {
+    "find-duplicates": "find-duplicates.js"
+  },
+  "dependencies": {
+    "commander": "^11.0.0",
+    "glob": "^10.3.3",
+    "sha1-file": "^3.0.0"
+  }
+}
