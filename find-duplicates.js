@@ -16,3 +16,19 @@ program
     findDuplicateFiles(directory);
   })
   .parse(process.argv);
+
+function findDuplicateFiles(directory) {
+  const fileMap = new Map(); // map that will contain file hashes
+
+  // match files using the patterns the shell uses (returns array of files)
+  glob.sync(path.join(directory, "**/*.*")).forEach((filePath) => {
+    const hash = sha1File.sync(filePath); // uses SHA-1 hash function to create file hash
+
+    // checks if duplicate file was already seen or not
+    if (fileMap.has(hash)) {
+      fileMap.get(hash).push(filePath);
+    } else {
+      fileMap.set(hash, [filePath]);
+    }
+  });
+}
