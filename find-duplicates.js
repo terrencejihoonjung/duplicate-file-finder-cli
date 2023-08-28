@@ -31,4 +31,13 @@ function findDuplicateFiles(directory) {
       fileMap.set(hash, [filePath]);
     }
   });
+
+  // iterate through map and find arrays with length > 1
+  fileMap.forEach((files, hash) => {
+    if (files > 1) {
+      console.log("Duplicate files (same content):");
+      files.forEach((file) => console.log(file));
+      console.log("---");
+    }
+  });
 }
