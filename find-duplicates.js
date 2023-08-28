@@ -10,7 +10,7 @@ const path = require("path");
 // Define program
 program
   .version("1.0.0")
-  .arguments("<directory>") // acts upon argument input
+  .argument("<directory>", "directory input") // acts upon argument input
   .action((directory) => {
     // takes argumnt and performs given action
     findDuplicateFiles(directory);
@@ -34,10 +34,10 @@ function findDuplicateFiles(directory) {
 
   // iterate through map and find arrays with length > 1
   fileMap.forEach((files, hash) => {
-    if (files > 1) {
-      console.log("Duplicate files (same content):");
+    if (files.length > 1) {
+      console.log("\nDuplicate files (same content):\n");
       files.forEach((file) => console.log(file));
-      console.log("---");
+      console.log("\n---");
     }
   });
 }
