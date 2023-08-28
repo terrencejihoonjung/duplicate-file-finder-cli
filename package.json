@@ -1,6 +1,6 @@
 {
   "name": "find-file-duplicates",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Node.js CLI application that takes a directory and finds duplicate files within that directory and its subdirectories.",
   "main": "find-duplicates.js",
   "scripts": {
