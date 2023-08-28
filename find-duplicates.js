@@ -11,26 +11,32 @@ const path = require("path");
 program
   .version("1.0.0")
   .argument("<directory>", "directory input") // acts upon argument input
-  .action((directory) => {
+  .option("--ignore", "ignore node modules")
+  .action((directory, options) => {
     // takes argumnt and performs given action
-    findDuplicateFiles(directory);
+    const ignoreNM = options.ignore ? true : false;
+    findDuplicateFiles(directory, ignoreNM);
   })
   .parse(process.argv);
 
-function findDuplicateFiles(directory) {
+function findDuplicateFiles(directory, ignoreNM) {
   const fileMap = new Map(); // map that will contain file hashes
 
   // match files using the patterns the shell uses (returns array of files)
-  glob.sync(path.join(directory, "**/*.*")).forEach((filePath) => {
-    const hash = calculateHash(filePath); // uses SHA-1 hash function to create file hash
+  glob
+    .sync(path.join(directory, "**/*.*"), {
+      ignore: ignoreNM ? "node_modules/**" : "",
+    })
+    .forEach((filePath) => {
+      const hash = calculateHash(filePath); // uses SHA-1 hash function to create file hash
 
-    // checks if duplicate file was already seen or not
-    if (fileMap.has(hash)) {
-      fileMap.get(hash).push(filePath);
-    } else {
-      fileMap.set(hash, [filePath]);
-    }
-  });
+      // checks if duplicate file was already seen or not
+      if (fileMap.has(hash)) {
+        fileMap.get(hash).push(filePath);
+      } else {
+        fileMap.set(hash, [filePath]);
+      }
+    });
 
   // iterate through map and find arrays with length > 1
   fileMap.forEach((files, hash) => {
