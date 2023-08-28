@@ -4,7 +4,9 @@ Node.js CLI application that takes a directory and finds duplicate files within 
 
 ## Notes
 
--
+- Utilizes commander, sha1-file, and glob packages to define program, use SHA-1 hash function, and pattern match files respectively
+- Uses a map to record any duplicate files that have the same hash
+- Searches within input directory and its subdirectories
 
 ## npm package download
 

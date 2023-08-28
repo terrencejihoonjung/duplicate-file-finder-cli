@@ -3,9 +3,9 @@
 // Import modules
 const program = require("commander");
 const glob = require("glob");
-const sha1File = require("sha1-file");
-const path = require("path");
+const crypto = require("crypto");
 const fs = require("fs");
+const path = require("path");
 
 // Define program
 program
@@ -22,7 +22,7 @@ function findDuplicateFiles(directory) {
 
   // match files using the patterns the shell uses (returns array of files)
   glob.sync(path.join(directory, "**/*.*")).forEach((filePath) => {
-    const hash = sha1File.sync(filePath); // uses SHA-1 hash function to create file hash
+    const hash = calculateHash(filePath); // uses SHA-1 hash function to create file hash
 
     // checks if duplicate file was already seen or not
     if (fileMap.has(hash)) {
@@ -40,4 +40,11 @@ function findDuplicateFiles(directory) {
       console.log("---");
     }
   });
+}
+
+function calculateHash(filePath) {
+  const data = fs.readFileSync(filePath);
+  const hash = crypto.createHash("sha1"); // create sha1 hash object
+  hash.update(data); // update hash with data
+  return hash.digest("hex"); // obtain final hash value by specifying encoding of output (represents hash as hexadecimal string)
 }
